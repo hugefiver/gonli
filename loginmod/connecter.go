@@ -27,7 +27,7 @@ func Login(user, password, ua string) (ok bool) {
     }
 }
 
-func connect(user, password, ua string) (error) {
+func connect(user, password, ua string) error {
     client := req.New()
 
     header := req.Header{

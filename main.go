@@ -10,21 +10,21 @@ import (
 )
 
 var (
-    user string
-    password string
-    userFile string
-    ua string
-    conf string
-    help bool
+    user *string
+    password *string
+    userFile *string
+    ua *string
+    conf *string
+    help *bool
 )
 
 func init()  {
-    user = *flag.String("u", "", "user")
-    password = *flag.String("p", "", "password")
-    userFile = *flag.String("U", "", "users file")
-    ua = *flag.String("ua", "", "user agent")
-    conf = *flag.String("conf", "", "")
-    help = *flag.Bool("h", false, "help")
+    user = flag.String("u", "", "user")
+    password = flag.String("p", "", "password")
+    userFile = flag.String("U", "", "users file")
+    ua = flag.String("ua", "", "user agent")
+    conf = flag.String("conf", "", "")
+    help = flag.Bool("h", false, "help")
 }
 
 
@@ -40,7 +40,7 @@ func loginOnce(user, password, ua string) (ok bool) {
 
 func loginUntilSuccess(users []User) (ok bool) {
     for _, u := range users {
-        ok := loginOnce(u.Id, u.Password, ua)
+        ok := loginOnce(u.Id, u.Password, *ua)
         if ok {
             return true
         }
@@ -50,14 +50,15 @@ func loginUntilSuccess(users []User) (ok bool) {
 
 func main()  {
     flag.Parse()
-    if help {
+    if *help {
         flag.Usage()
         return
     }
-    if user != "" {
-        loginOnce(user, password, ua)
-    } else if userFile != "" {
-        data, err := ioutil.ReadFile(userFile)
+
+    if *user != "" {
+        loginOnce(*user, *password, *ua)
+    } else if *userFile != "" {
+        data, err := ioutil.ReadFile(*userFile)
         if err != nil {
             log.Fatalln(err)
             return
@@ -70,7 +71,7 @@ func main()  {
             return
         }
         loginUntilSuccess(users)
-    } else if conf != "" {
+    } else if *conf != "" {
         log.Fatal("Not Support Config Currently.")
     } else {
         flag.Usage()
