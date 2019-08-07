@@ -25,6 +25,7 @@ func init()  {
     ua = flag.String("ua", "", "user agent")
     conf = flag.String("conf", "", "")
     help = flag.Bool("h", false, "help")
+    flag.Parse()
 }
 
 
@@ -49,7 +50,6 @@ func loginUntilSuccess(users []User) (ok bool) {
 }
 
 func main()  {
-    flag.Parse()
     if *help {
         flag.Usage()
         return
