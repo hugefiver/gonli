@@ -6,7 +6,7 @@ import (
     "io/ioutil"
     "log"
 
-    . "gonli/loginmod"
+    . "github.com/hugefiver/gonli/loginmod"
 )
 
 var (

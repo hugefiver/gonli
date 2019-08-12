@@ -1,0 +1,53 @@
+before:
+builds:
+- id: gonli
+  ldflags:
+  - -s -w
+  goos:
+  - windows
+  - darwin
+  - linux
+  - freebsd
+  goarch:
+  - 386
+  - amd64
+  - mips
+  - mips64
+  - arm
+  - arm64
+  goarm:
+  - 7
+  - 6
+  ignore:
+  - goos: darwin
+    goarch: mips
+  - goos: darwin
+    goarch: mips64
+  - goos: windows
+    goarch: mips
+  - goos: windows
+    goarch: mips64
+  - goos: windows
+    goarch: arm64
+  - goos: freebsd
+    goarch: mips
+  - goos: freebsd
+    goarch: mips64
+  - goos: freebsd
+    goarch: arm64
+  env:
+  - CGO_ENABLED=0
+
+archives:
+- id: "gonli"
+  replacements:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm
+    }}v{{ .Arm }}{{ end }}"
+  format: zip
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}"
+changelog:
+signs:
+env_files:

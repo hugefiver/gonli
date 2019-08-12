@@ -1,4 +1,4 @@
-module gonli
+module github.com/hugefiver/gonli
 
 go 1.12
 
